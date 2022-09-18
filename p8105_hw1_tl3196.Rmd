@@ -5,26 +5,43 @@ date: "2022-09-17"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Problem 1
+
+```{r penguins, echo = TRUE}
+data("penguins", package = "palmerpenguins")
+
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r show_penguins, echo = FALSE}
+penguins
 ```
 
-## Including Plots
+The 'penguins' dataset is a tibble of `r nrow(penguins)` × `r ncol(penguins)`.
 
-You can also embed plots, for example:
+The variables include `r colnames(penguins)`.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+-   Species - factor, the species of the penguins.
+
+-   Island - factor, the island the penguin lives on.
+
+-   Bill_length_mm - numeric, the length of penguin's bill in mm.
+
+-   Bill_depth_mm - numeric, the depth of penguin's bill in mm.
+
+-   Flipper_length_mm - integer, the length of penguin's flipper in mm. The mean length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)`.
+
+-   Body_mass_g - integer, penguin's body mass in gram.
+
+-   Sex - factor, penguin's sex.
+
+-   Year - integer, the year that the penguin's egg was found.
+
+```{r scatterplot, message=FALSE, warning=FALSE}
+library(tidyverse)
+ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)) + geom_point()
+ggsave("scatterplot.png")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+Export your first scatterplot to your project directory using ggsave.
