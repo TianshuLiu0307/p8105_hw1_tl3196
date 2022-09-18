@@ -42,6 +42,30 @@ ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)
 ggsave("scatterplot.png")
 ```
 
+# Problem 2
+
+```{r generate_df}
+data_type_df =
+  tibble(
+  random_norm = rnorm(n = 10, mean = 0, sd = 1),
+  logical = random_norm > 0, 
+  character = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"),
+  factor = factor(sample(1:3, 10, replace = TRUE), levels = c(1, 2, 3), labels =c ("bad", "okay", "good"))
+)
+
+```
+
+```{r show_df, echo=FALSE}
+data_type_df
+```
+
+The mean of each col is:
+
+-  random_norm : `r mean(data_type_df$random_norm)`
+-  logical : `r mean(data_type_df$logical)`
+-  character : `r mean(data_type_df$character)`
+-  factor : `r mean(data_type_df$factor)`
+
+Conclusion: when calculating mean, it works for numeric and logical variables, not for character and factor vectors.
 
 
-Export your first scatterplot to your project directory using ggsave.
