@@ -422,25 +422,47 @@ ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)
 <pre><code>## # A tibble: 10 × 4
 ##    random_norm logical character factor
 ##          &lt;dbl&gt; &lt;lgl&gt;   &lt;chr&gt;     &lt;fct&gt; 
-##  1     -0.0934 FALSE   A         good  
-##  2      0.0735 TRUE    B         okay  
-##  3      0.921  TRUE    C         bad   
-##  4      0.0357 TRUE    D         okay  
-##  5     -0.392  FALSE   E         good  
-##  6      0.993  TRUE    F         good  
-##  7      0.333  TRUE    G         good  
-##  8      1.05   TRUE    H         bad   
-##  9      2.57   TRUE    I         good  
-## 10     -0.801  FALSE   J         okay</code></pre>
+##  1     -0.224  FALSE   A         good  
+##  2     -1.47   FALSE   B         okay  
+##  3      0.536  TRUE    C         bad   
+##  4     -0.200  FALSE   D         okay  
+##  5      0.658  TRUE    E         good  
+##  6      0.461  TRUE    F         good  
+##  7      1.16   TRUE    G         okay  
+##  8     -0.0188 FALSE   H         okay  
+##  9     -0.621  FALSE   I         okay  
+## 10      0.624  TRUE    J         good</code></pre>
 <p>The mean of each col is:</p>
 <ul>
-<li>random_norm : 0.4691832</li>
-<li>logical : 0.7</li>
-<li>character : NA</li>
-<li>factor : NA</li>
+<li>random_norm : <code>0.0905715</code></li>
+<li>logical : <code>0.5</code></li>
+<li>character : <code>NA</code></li>
+<li>factor : <code>NA</code></li>
 </ul>
 <p>Conclusion: when calculating mean, it works for numeric and logical
 variables, not for character and factor vectors.</p>
+<p>After using as.numeric() function:</p>
+<ul>
+<li>random_norm : <code>0.0905715</code></li>
+<li>logical : <code>0.5</code></li>
+<li>character : <code>NA</code></li>
+<li>factor : <code>2.3</code></li>
+</ul>
+<p>Conclusion: After using as.numeric()function, the mean of logical
+variables remains the same as before, the mean of factor variables can
+be calculated, but the mean of character variables is still NA.</p>
+<p>Reason:</p>
+<p>After using the function as.numeric, the values of logical variables
+<code>FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE</code>
+turns out to be <code>0, 0, 1, 0, 1, 1, 1, 0, 0, 1</code>, which can be
+used to calculate mean;</p>
+<p>The character variables<code>A, B, C, D, E, F, G, H, I, J</code>
+turns out to be <code>NA, NA, NA, NA, NA, NA, NA, NA, NA, NA</code>,
+which are all NAs so the mean cannot be calculated;</p>
+<p>The factor
+variables<code>good, okay, bad, okay, good, good, okay, okay, okay, good</code>
+turns out to be <code>3, 2, 1, 2, 3, 3, 2, 2, 2, 3</code>, which can
+also be calculated for the mean.</p>
 </div>
 
 

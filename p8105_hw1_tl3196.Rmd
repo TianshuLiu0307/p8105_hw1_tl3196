@@ -20,21 +20,21 @@ The 'penguins' dataset is a tibble of `r nrow(penguins)` × `r ncol(penguins)`.
 
 The variables include `r colnames(penguins)`.
 
--   Species - factor, the species of the penguins.
+-   Species - `r class(penguins$species)`, the species of the penguins.
 
--   Island - factor, the island the penguin lives on.
+-   Island - `r class(penguins$island)`, the island the penguin lives on.
 
--   Bill_length_mm - numeric, the length of penguin's bill in mm.
+-   Bill_length_mm - `r class(penguins$bill_length_mm)`, the length of penguin's bill in mm.
 
--   Bill_depth_mm - numeric, the depth of penguin's bill in mm.
+-   Bill_depth_mm - `r class(penguins$bill_depth_mm)`, the depth of penguin's bill in mm.
 
--   Flipper_length_mm - integer, the length of penguin's flipper in mm. The mean length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)`.
+-   Flipper_length_mm - `r class(penguins$flipper_length_mm)`, the length of penguin's flipper in mm. The mean length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)`.
 
--   Body_mass_g - integer, penguin's body mass in gram.
+-   Body_mass_g - `r class(penguins$body_mass_g)`, penguin's body mass in gram.
 
--   Sex - factor, penguin's sex.
+-   Sex - `r class(penguins$sex)`, penguin's sex.
 
--   Year - integer, the year that the penguin's egg was found.
+-   Year - `r class(penguins$year)`, the year that the penguin's egg was found.
 
 ```{r scatterplot, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -61,11 +61,26 @@ data_type_df
 
 The mean of each col is:
 
--  random_norm : `r mean(data_type_df$random_norm)`
--  logical : `r mean(data_type_df$logical)`
--  character : `r mean(data_type_df$character)`
--  factor : `r mean(data_type_df$factor)`
+-  random_norm : ``r mean(pull(data_type_df, random_norm))``
+-  logical : ``r mean(pull(data_type_df, logical))``
+-  character : ``r mean(pull(data_type_df, character))``
+-  factor : ``r mean(pull(data_type_df, factor))``
 
 Conclusion: when calculating mean, it works for numeric and logical variables, not for character and factor vectors.
 
+After using as.numeric() function:
 
+-  random_norm : ``r mean(as.numeric(pull(data_type_df, random_norm)))``
+-  logical : ``r mean(as.numeric(pull(data_type_df, logical)))``
+-  character : ``r mean(as.numeric(pull(data_type_df, character)))``
+-  factor : ``r mean(as.numeric(pull(data_type_df, factor)))``
+
+Conclusion: After using as.numeric()function, the mean of logical variables remains the same as before, the mean of factor variables can be calculated, but the mean of character variables is still NA.
+
+Reason: 
+
+After using the function as.numeric, the values of logical variables ``r pull(data_type_df, logical)`` turns out to be ``r as.numeric(pull(data_type_df, logical))``, which can be used to calculate mean; 
+
+The character variables``r pull(data_type_df, character)`` turns out to be ``r as.numeric(pull(data_type_df, character))``, which are all NAs so the mean cannot be calculated;
+
+The factor variables``r pull(data_type_df, factor)`` turns out to be ``r as.numeric(pull(data_type_df, factor))``, which can also be calculated for the mean.
