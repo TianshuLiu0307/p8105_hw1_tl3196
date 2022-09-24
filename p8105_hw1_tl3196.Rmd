@@ -7,18 +7,22 @@ output: html_document
 
 # Problem 1
 
+```{r install_penguins, eval=FALSE}
+install.packages("palmerpenguins")
+```
+
+
 ```{r penguins, echo = TRUE}
 data("penguins", package = "palmerpenguins")
-
 ```
 
 ```{r show_penguins, echo = FALSE}
 penguins
 ```
 
-The 'penguins' dataset is a tibble of `r nrow(penguins)` × `r ncol(penguins)`.
+The 'penguins' dataset is a tibble of ``r nrow(penguins)` × `r ncol(penguins)``.
 
-The variables include `r colnames(penguins)`.
+The variables include ``r colnames(penguins)``.
 
 -   Species - `r class(penguins$species)`, the species of the penguins.
 
@@ -68,19 +72,23 @@ The mean of each col is:
 
 Conclusion: when calculating mean, it works for numeric and logical variables, not for character and factor vectors.
 
-After using as.numeric() function:
+After using `as.numeric()` function:
 
 -  random_norm : ``r mean(as.numeric(pull(data_type_df, random_norm)))``
 -  logical : ``r mean(as.numeric(pull(data_type_df, logical)))``
 -  character : ``r mean(as.numeric(pull(data_type_df, character)))``
 -  factor : ``r mean(as.numeric(pull(data_type_df, factor)))``
 
-Conclusion: After using as.numeric()function, the mean of logical variables remains the same as before, the mean of factor variables can be calculated, but the mean of character variables is still NA.
+Conclusion: After using `as.numeric()` function, the mean of logical variables remains the same as before, the mean of factor variables can be calculated, but the mean of character variables is still NA.
 
 Reason: 
 
-After using the function as.numeric, the values of logical variables ``r pull(data_type_df, logical)`` turns out to be ``r as.numeric(pull(data_type_df, logical))``, which can be used to calculate mean; 
+The `as.numeric()` function can convert the value of logical and factor variables to numeric variables which can be used to calculate means.
 
-The character variables``r pull(data_type_df, character)`` turns out to be ``r as.numeric(pull(data_type_df, character))``, which are all NAs so the mean cannot be calculated;
+The `as.numeric()` function converts the value of logical variables from `TRUE /FALSE` to `0 / 1`. 
+In this case, the values of input logical variables ``r pull(data_type_df, logical)`` turns out to be ``r as.numeric(pull(data_type_df, logical))``, which can be used to calculate mean ``r mean(as.numeric(pull(data_type_df, logical)))``; 
 
-The factor variables``r pull(data_type_df, factor)`` turns out to be ``r as.numeric(pull(data_type_df, factor))``, which can also be calculated for the mean.
+The `as.numeric()` function converts the value of factor variables to numbers based on the maps between levels and labels. 
+In this case, the factor variables``r pull(data_type_df, factor)`` turns out to be ``r as.numeric(pull(data_type_df, factor))``, which can also be calculated for the mean;
+
+The character variables``r pull(data_type_df, character)`` turns out to be ``r as.numeric(pull(data_type_df, character))``, which are all NAs so that the mean cannot be calculated.
